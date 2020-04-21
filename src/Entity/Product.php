@@ -39,6 +39,11 @@ class Product
     private $status;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    private $imageFile;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="product")
      */
     private $orderItems;
@@ -97,6 +102,18 @@ class Product
     public function setStatus(bool $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getImageFile(): ?string
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(string $imageFile): self
+    {
+        $this->imageFile = $imageFile;
 
         return $this;
     }
