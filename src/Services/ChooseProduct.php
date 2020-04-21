@@ -4,15 +4,19 @@
 namespace App\Services;
 
 
+use App\Entity\OrderItem;
 use Symfony\Component\HttpFoundation\Request;
 
 class ChooseProduct
 {
-    public function addProductToOrderItem()
+
+    public function addProductToOrderItem(Request $request)
     {
-        $request = new Request();
-        $request->request->get('choose');
-        dump($request);
+        if($request->get('choose')){
+            $product = $request->get('product_id');
+            $orderItem = new OrderItem();
+            $orderItem->setProduct($product);
+        };
     }
 
 }

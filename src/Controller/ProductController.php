@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\OrderItem;
+use App\Form\ChooseProductFormType;
 use App\Repository\ProductRepository;
+use App\Services\ChooseProduct;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,21 +27,18 @@ class ProductController extends AbstractController
      * @param ProductRepository $productRepository
      * @return Response
      */
-    public function showAll(ProductRepository $productRepository)
+    public function showAll(ProductRepository $productRepository, Request $request)
     {
+        $form = $this->createForm(ChooseProductFormType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            dd($form->getData());
+        }
+
         $products = $productRepository->displayAllProducts();
         return $this->render('product/show_all.html.twig', [
-            'products' => $products
-        ]);
-    }
-
-    /**
-     * @Route("product/{slug}", name="product_show")
-     */
-    public function show($slug)
-    {
-        return $this->render('product/show.html.twig', [
-            'title' => ucwords(str_replace('-', ' ', $slug))
+            'products' => $products,
+            'chooseProductForm' => $form->createView()
         ]);
     }
 }
