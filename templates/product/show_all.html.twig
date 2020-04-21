@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/card_product.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>WELCOME TO THE PRODUCTS PAGE</h1>
+        <div class="products_page row">
+            <div class="products col-sm-8">
+                {% for product in products %}
+                    <div class="card-product">
+                        <img src="../../images/{{ product.imageFile }}" />
+                        <div class="card-product-infos">
+                            <h2>{{ product.type | capitalize }}</h2>
+                            <p>Size : {{ product.size }} / Price : <strong>{{ product.price }}</strong> € </p>
+                            <form method="POST">
+                                <submit class='btn btn-ghost' name="choose" type="button">Choose</submit>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-sm-4 product_choose">
+                <h2>Your products</h2>
+                <div>
+                    <ul>
+                        <li>Order item 1 - order item quantity - order item amount</li>
+                        <li>Order item 2 - order item quantity - order item amount</li>
+                        <li>Order item 3 - order item quantity - order item amount</li>
+                        <li>Order item 4 - order item quantity - order item amount</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

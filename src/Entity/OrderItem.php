@@ -31,10 +31,6 @@ class OrderItem
      */
     private $product;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="orderItems")
-     */
-    private $one_order;
 
     public function getId(): ?int
     {
