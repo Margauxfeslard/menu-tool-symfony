@@ -31,6 +31,11 @@ class OrderItem
      */
     private $product;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $size;
+
 
     public function getId(): ?int
     {
@@ -81,6 +86,18 @@ class OrderItem
     public function setOneOrder(?Order $one_order): self
     {
         $this->one_order = $one_order;
+
+        return $this;
+    }
+
+    public function getSize(): ?string
+    {
+        return $this->size;
+    }
+
+    public function setSize(string $size): self
+    {
+        $this->size = $size;
 
         return $this;
     }

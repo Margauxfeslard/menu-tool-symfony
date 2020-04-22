@@ -15,7 +15,8 @@
                         <div class="card-product-infos">
                             <h2>{{ product.type | capitalize }}</h2>
                             <p>Price : <strong>{{ product.price }}</strong> € </p>
-                            <button type="submit" class="btn btn-ghost">Choose!</button>
+                            {{ form_start(chooseProduct) }}
+                            {{ form_end(chooseProduct) }}
                         </div>
                     </div>
                 {% endfor %}
@@ -23,12 +24,13 @@
             <div class="col-sm-4 product_choose">
                 <h2>Your products</h2>
                 <div>
+                    {% if orderItem %}
                     <ul>
-                        <li>Order item 1 - order item quantity - order item amount</li>
-                        <li>Order item 2 - order item quantity - order item amount</li>
-                        <li>Order item 3 - order item quantity - order item amount</li>
-                        <li>Order item 4 - order item quantity - order item amount</li>
+                        {% for od in orderItem %}
+                        <li>Size : {{ od.size }}/ Amount : {{ od.amount }} / Quantity : {{ od.quantity }}</li>
+                        {% endfor %}
                     </ul>
+                    {% endif %}
                 </div>
             </div>
         </div>

@@ -38,6 +38,6 @@ class CrewmanController extends AbstractController
         return $this->render('product/create_product.html.twig', [
             'productForm' => $form->createView()
         ]);
-    } 
+    }
 }
 
