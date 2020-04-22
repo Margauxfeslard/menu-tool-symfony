@@ -4,15 +4,26 @@
 namespace App\Services;
 
 
+use App\Entity\OrderItem;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ChooseProduct
 {
-    public function addProductToOrderItem()
+    private $em;
+    public function __construct(EntityManagerInterface $em)
     {
-        $request = new Request();
-        $request->request->get('choose');
-        dump($request);
+        $this->em =$em;
     }
 
+    public function addProductToOrderItem()
+    {
+        $orderItem = new OrderItem();
+        $orderItem->setQuantity('1')
+            ->setSize('Medium')
+            ->setAmount('4');
+
+        $this->em->persist($orderItem);
+        $this->em->flush();
+    }
 }

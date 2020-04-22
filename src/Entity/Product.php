@@ -26,11 +26,6 @@ class Product
     /**
      * @ORM\Column(type="integer")
      */
-    private $size;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
     private $price;
 
     /**
@@ -66,18 +61,6 @@ class Product
     public function setType(string $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    public function getSize(): ?int
-    {
-        return $this->size;
-    }
-
-    public function setSize(int $size): self
-    {
-        $this->size = $size;
 
         return $this;
     }

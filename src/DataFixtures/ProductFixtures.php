@@ -29,56 +29,30 @@ class ProductFixtures extends AppFixtures
             'fit-n-tasty'
         ];
 
-        $status = [
-            true,
-            false
-        ];
-
-        $this->createMany(6, function() use ($status, $burgers) {
+        $this->createMany(3, function() use ( $burgers) {
             $product = new Product();
-            $product->setType($burgers[array_rand($burgers, 1)])
-                ->setSize(rand(1,3));
-                if($product->getSize() == 1){
-                    $product->setPrice(6);
-                } elseif ($product->getSize() == 2){
-                    $product->setPrice(7);
-                } else {
-                    $product->setPrice(8);
-                }
-                $product->setStatus($status[array_rand($status, 1)])
+            $product->setType($burgers[array_rand($burgers, 1)]);
+            $product->setPrice(8);
+            $product->setStatus(rand(0,1))
                 ->setImageFile($product->getType().'.jpg');
             return $product;
         });
 
-        $this->createMany(4, function() use ($status, $sides) {
+        $this->createMany(4, function() use ( $sides) {
             $product = new Product();
-            $product->setType($sides[array_rand($sides, 1)])
-                ->setSize(rand(1,3));
-                if($product->getSize() == 1){
-                    $product->setPrice(2);
-                } elseif ($product->getSize() == 2){
-                    $product->setPrice(3);
-                } else {
-                    $product->setPrice(4);
-                }
-               $product->setStatus($status[array_rand($status, 1)])
+            $product->setType($sides[array_rand($sides, 1)]);
+            $product->setPrice(4);
+            $product->setStatus(rand(0,1))
                 ->setImageFile($product->getType().'.jpg');
 
             return $product;
         });
 
-        $this->createMany(10, function() use ($status, $drinks) {
+        $this->createMany(10, function() use ($drinks) {
             $product = new Product();
-            $product->setType($drinks[array_rand($drinks, 1)])
-                ->setSize(rand(1,3));
-                if($product->getSize() == 1){
-                    $product->setPrice(2);
-                } elseif ($product->getSize() == 2){
-                    $product->setPrice(3);
-                } else {
-                    $product->setPrice(4);
-                }
-                $product->setStatus($status[array_rand($status, 1)])
+            $product->setType($drinks[array_rand($drinks, 1)]);
+            $product->setPrice(5);
+            $product->setStatus(rand(0,1))
                 ->setImageFile($product->getType().'.jpg');
 
             return $product;
