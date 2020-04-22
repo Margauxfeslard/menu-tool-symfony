@@ -14,11 +14,8 @@
                         <img src="../../images/{{ product.imageFile }}" />
                         <div class="card-product-infos">
                             <h2>{{ product.type | capitalize }}</h2>
-                            <p>Size : {{ product.size }} / Price : <strong>{{ product.price }}</strong> € </p>
-                            {{ form_start(chooseProductForm) }}
-                            {{ form_widget(chooseProductForm) }}
+                            <p>Price : <strong>{{ product.price }}</strong> € </p>
                             <button type="submit" class="btn btn-ghost">Choose!</button>
-                            {{ form_end(chooseProductForm) }}
                         </div>
                     </div>
                 {% endfor %}
