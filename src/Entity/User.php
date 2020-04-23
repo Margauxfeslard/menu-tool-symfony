@@ -2,14 +2,13 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -19,45 +18,28 @@ class User
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $role;
+    private $email;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $email;
+    private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $password;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="user")
-     */
-    private $orders;
-
-    public function __construct()
-    {
-        $this->orders = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-    public function setRole(string $role): self
-    {
-        $this->role = $role;
-
-        return $this;
     }
 
     public function getEmail(): ?string
@@ -72,45 +54,75 @@ class User
         return $this;
     }
 
-    public function getPassword(): ?string
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
     {
-        return $this->password;
+        return (string) $this->email;
     }
 
-    public function setPassword(string $password): self
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        $this->password = $password;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }
 
     /**
-     * @return Collection|Order[]
+     * @see UserInterface
      */
-    public function getOrders(): Collection
+    public function getPassword()
     {
-        return $this->orders;
+        return $this->password;
     }
 
-    public function addOrder(Order $order): self
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
     {
-        if (!$this->orders->contains($order)) {
-            $this->orders[] = $order;
-            $order->setUser($this);
-        }
+        // not needed for apps that do not check user passwords
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
 
         return $this;
     }
 
-    public function removeOrder(Order $order): self
+    public function setPassword(string $password): self
     {
-        if ($this->orders->contains($order)) {
-            $this->orders->removeElement($order);
-            // set the owning side to null (unless already changed)
-            if ($order->getUser() === $this) {
-                $order->setUser(null);
-            }
-        }
+        $this->password = $password;
 
         return $this;
     }
