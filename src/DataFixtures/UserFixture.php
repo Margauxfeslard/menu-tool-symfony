@@ -39,7 +39,6 @@ class UserFixture extends AppFixtures
                 $user,
                 'burger'
             ));
-
             return $user;
         });
 
