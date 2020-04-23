@@ -22,16 +22,9 @@ class UserFixture extends AppFixtures
             'Jean',
             'Franck',
             'Margaux',
-            'Noemie',
-            'Lucie',
-            'Paul',
-            'Christophe',
-            'Théo',
-            'Hugo',
-            'Leila'
         ];
 
-        $this->createMany(10, function($i) use ($firstName) {
+        $this->createMany(3, function($i) use ($firstName) {
             $user = new User();
             $user->setEmail(sprintf('burger%d@example.com', $i));
             $user->setFirstName($firstName[$i]);
@@ -41,6 +34,43 @@ class UserFixture extends AppFixtures
             ));
             return $user;
         });
+
+        $this->createMany(1, function($i) use ($firstName) {
+            $user = new User();
+            $user->setEmail(sprintf('admin%d@example.com', $i));
+            $user->setFirstName($firstName[$i]);
+            $user->setRoles(['ROLE_ADMIN']);
+            $user->setPassword($this->passwordEncoder->encodePassword(
+                $user,
+                'burger'
+            ));
+            return $user;
+        });
+
+        $this->createMany(1, function($i) use ($firstName) {
+            $user = new User();
+            $user->setEmail(sprintf('adminproduct%d@example.com', $i));
+            $user->setFirstName($firstName[$i]);
+            $user->setRoles(['ROLE_ADMIN_PRODUCT']);
+            $user->setPassword($this->passwordEncoder->encodePassword(
+                $user,
+                'burger'
+            ));
+            return $user;
+        });
+
+        $this->createMany(1, function($i) use ($firstName) {
+            $user = new User();
+            $user->setEmail(sprintf('adminorder%d@example.com', $i));
+            $user->setFirstName($firstName[$i]);
+            $user->setRoles(['ROLE_ADMIN_ORDER']);
+            $user->setPassword($this->passwordEncoder->encodePassword(
+                $user,
+                'burger'
+            ));
+            return $user;
+        });
+
 
         $manager->flush();
     }
