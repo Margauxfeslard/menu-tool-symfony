@@ -1,0 +1,9 @@
+{{ form_start(productForm ) }}
+                {{ form_row(productForm.type, {
+                    label:'Product type'
+                }) }}
+                {{ form_row(productForm.price) }}
+                {{ form_row(productForm.imageFile) }}
+                {{ form_row(productForm.status) }}
+<button type="submit" class="btn btn-primary">{{ button_text }}</button>
+{{ form_end(productForm ) }}
