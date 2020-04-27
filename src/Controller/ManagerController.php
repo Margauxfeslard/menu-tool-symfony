@@ -42,5 +42,32 @@ class ManagerController extends AbstractController
             'productForm' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("admin/product/{id}/edit", name="product_edit")
+     * @param Product $product
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     */
+    public function edit(Product $product, EntityManagerInterface $entityManager, Request $request)
+    {
+        $form = $this->createForm(ProductFormType::class, $product);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $entityManager->persist($product);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Product Updated !');
+
+            return $this->redirectToRoute('product_edit', [
+                 'id' => $product->getId()
+            ]);
+        }
+        return $this->render('product/edit_product.html.twig', [
+            'productForm' => $form->createView()
+        ]);
+    }
+
 }
 

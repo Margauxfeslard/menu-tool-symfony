@@ -4,7 +4,9 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
@@ -16,32 +18,34 @@ class Product
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull()
+     * @Assert\NotBlank(message="Get creative and think of a title!")
      */
-    private $type;
+    private ?string $type;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $price;
+    private ?int $price;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $status;
+    private ?bool $status;
 
     /**
      * @ORM\Column(type="string")
      */
-    private $imageFile;
+    private ?string $imageFile;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="product")
      */
-    private $orderItems;
+    private ArrayCollection $orderItems;
 
     public function __construct()
     {

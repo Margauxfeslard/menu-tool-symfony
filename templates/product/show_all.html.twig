@@ -15,7 +15,17 @@
                         <div class="card-product-infos">
                             <h2>{{ product.type | capitalize }}</h2>
                             <p>Price : <strong>{{ product.price }}</strong> € </p>
-                            {{ form_start(chooseProduct) }}
+                            <a href="{{ path('product_edit', {
+                                id: product.id,
+                            }) }}">
+                                <span class="fa fa-pencil"></span>
+                            </a>
+                            {#<a href="{{ path('product_delete', {
+                                id: product.id,
+                            }) }}">
+                                <span class="bi bi-trash-fill"></span>
+                            </a>#}
+                            {{ form_start(chooseProduct) }}  
                             {{ form_end(chooseProduct) }}
                         </div>
                     </div>
