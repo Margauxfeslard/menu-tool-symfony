@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,7 +30,12 @@ class OrderItem
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="orderItems")
      */
-    private $product;
+    private ArrayCollection $products;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
 
     /**
      * @ORM\Column(type="string", length=255)

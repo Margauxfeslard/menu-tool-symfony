@@ -6,44 +6,27 @@
 
 {% block body %}
     <div class="container">
-        <h1>WELCOME TO THE PRODUCTS PAGE</h1>
-        <div class="products_page row">
-            <div class="products col-sm-8">
-                {% for product in products %}
-                    <div class="card-product">
-                        <img src="../../images/{{ product.imageFile }}" />
-                        <div class="card-product-infos">
-                            <h2>{{ product.type | capitalize }}</h2>
-                            <p>Price : <strong>{{ product.price }}</strong> € </p>
-                            <a href="{{ path('product_edit', {
-                                id: product.id,
-                            }) }}">
-                                <span class="fa fa-pencil"></span>
-                            </a>
-                            {#<a href="{{ path('product_delete', {
-                                id: product.id,
-                            }) }}">
-                                <span class="bi bi-trash-fill"></span>
-                            </a>#}
-                            {{ form_start(chooseProduct) }}  
-                            {{ form_end(chooseProduct) }}
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-            <div class="col-sm-4 product_choose">
-                <h2>Your products</h2>
-                <div>
-                    {% if orderItem %}
-                    <ul>
-                        {% for od in orderItem %}
-                        <li>Size : {{ od.size }}/ Amount : {{ od.amount }} / Quantity : {{ od.quantity }}</li>
-                        {% endfor %}
-                    </ul>
+        <h1>Show page</h1>
+        {% for product in products %}
+            <div class="card-product">
+                <img src="images/{{ product.type }}.jpg" />
+                <div class="card-product-infos">
+                    <h2>{{ product.type }}</h2>
+                    <p>Price : <strong>{{ product.price }}</strong> €</p>
+                    {% if is_granted('ROLE_ADMIN_PRODUCT')%}
+                        <a class="fa fa-pencil" href="{{ path('product_edit', {
+                            id: product.id
+                        }) }}"></a>
+                        {#<a class="fa fa-shopping-basket" href="{{ path('product_delete', {
+                            id: product.id
+                        }) }}"></a>#}
                     {% endif %}
+                    <a class="fa fa-plus-square" href="{{ path('product_choose', {
+                        id: product.id
+                    }) }}"></a>
                 </div>
             </div>
-        </div>
+    {% endfor %}
     </div>
 {% endblock %}
 

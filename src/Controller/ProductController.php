@@ -17,33 +17,40 @@ class ProductController extends AbstractController
 {
     /**
      * @Route("/", name="app_homepage")
+     * @param ProductRepository $productRepository
      * @return Response
      */
-    public function homepage()
+    public function homepage(ProductRepository $productRepository)
     {
         return $this->render('base.html.twig', []);
     }
 
     /**
-     * @Route("products/", name="products_show")
+     * @Route("/products", name="products_show")
      * @param ProductRepository $productRepository
-     * @param Request $request
-     * @param ChooseProduct $chooseProduct
      * @return Response
      */
-    public function showAll(ProductRepository $productRepository, Request $request, ChooseProduct $chooseProduct, OrderItemRepository $orderItemRepository)
+    public function showAll( ProductRepository $productRepository)
     {
-        $form = $this->createForm(ChooseProductTypeForm::class);
-        $form->handleRequest($request);
-        if ($form->get('choose')->isClicked()) {
-           $chooseProduct->addProductToOrderItem();
-        }
-        $orderItem = $orderItemRepository->findAll();
-        $products = $productRepository->displayAllProducts();
+       $products = $productRepository->findAll();
+
         return $this->render('product/show_all.html.twig', [
-            'products' => $products,
-            'chooseProduct' => $form->createView(),
-            'orderItem' => $orderItem
+            'products'=> $products,
+        ]);
+    }
+
+    /**
+     * @Route("product/{id}/choose", name="product_choose")
+     * @param ProductRepository $productRepository
+     * @return Response
+     */
+    public function productChoose( ProductRepository $productRepository)
+    {
+        
+        $products = $productRepository->findAll();
+
+        return $this->render('product/product_choose.html.twig', [
+            'products'=> $products,
         ]);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Entity\OrderItem;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
