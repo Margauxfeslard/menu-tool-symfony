@@ -69,7 +69,5 @@ class ManagerController extends AbstractController
         ]);
     }
 
-
-
 }
 

@@ -17,31 +17,32 @@ class Order
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private ?int $id;
+    private $id;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private ?int $amount;
+    private $amount;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private ?string $status;
+    private $status;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\OrderItem", inversedBy="orders")
      */
-    private ArrayCollection $orderItem;
+    private Collection $orderItem;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="orders")
      */
-    private ?User $user;
+    private Collection $user;
 
     public function __construct()
     {
         $this->orderItem = new ArrayCollection();
+        $this->user = new ArrayCollection();
     }
 
     public function getId(): ?int

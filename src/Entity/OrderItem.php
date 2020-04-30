@@ -28,14 +28,14 @@ class OrderItem
     private $amount;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="orderItems")
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="orderItems")
      */
-    private ArrayCollection $products;
+    private $product;
 
-    public function __construct()
-    {
-        $this->products = new ArrayCollection();
-    }
+    /**
+     * @ORM\OneToMany(targetEntity="Order", mappedBy="orderItem")
+     */
+    private $orders;
 
     /**
      * @ORM\Column(type="string", length=255)

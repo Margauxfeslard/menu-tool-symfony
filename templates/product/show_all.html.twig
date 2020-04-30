@@ -5,29 +5,38 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Show page</h1>
-        {% for product in products %}
-            <div class="card-product">
-                <img src="images/{{ product.type }}.jpg" />
-                <div class="card-product-infos">
-                    <h2>{{ product.type }}</h2>
-                    <p>Price : <strong>{{ product.price }}</strong> €</p>
-                    {% if is_granted('ROLE_ADMIN_PRODUCT')%}
-                        <a class="fa fa-pencil" href="{{ path('product_edit', {
-                            id: product.id
-                        }) }}"></a>
-                        {#<a class="fa fa-shopping-basket" href="{{ path('product_delete', {
-                            id: product.id
-                        }) }}"></a>#}
-                    {% endif %}
-                    <a class="fa fa-plus-square" href="{{ path('product_choose', {
-                        id: product.id
-                    }) }}"></a>
+    <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 left">
+                    <h2>Products list</h2>
+                    <ul>
+                        {% for product in products %}
+                            <li>Type : {{ product.type }} / Price : {{ product.price }}
+                                <a href="{{ path('products_show', {
+                                    id: product.id
+                                }) }}">
+                                    <span class="fa fa-plus"></span>
+                                </a>
+                            </li>
+
+                        {% endfor %}
+                    </ul>
+
+                </div>
+                <div class="col-md-6 right">
+                    <h2>Order Item list</h2>
+                    {{ form_start(form) }}
+                    <ul>
+                        {% for od in form.orderItems %}
+                            <li>{{ form_row(od.size) }}</li>
+                            <li>{{ form_row(od.quantity) }}</li>
+                        {% endfor %}
+                    </ul>
+                    {{ form_end(form) }}
                 </div>
             </div>
-    {% endfor %}
     </div>
 {% endblock %}
+
 
 

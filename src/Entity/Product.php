@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Doctrine\ORM\Mapping as ORM;
@@ -42,7 +43,7 @@ class Product
     private $imageFile;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="OrderItem", mappedBy="product")
      */
     private $orderItems;
 

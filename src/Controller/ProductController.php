@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Order;
 use App\Entity\OrderItem;
+use App\Entity\Product;
 use App\Form\ChooseProductTypeForm;
+use App\Form\OrderItemFormType;
 use App\Form\ProductFormType;
+use App\Form\SaveFormType;
 use App\Repository\OrderItemRepository;
 use App\Repository\ProductRepository;
 use App\Services\ChooseProduct;
@@ -27,30 +31,27 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/products", name="products_show")
+     * @param Request $request
      * @param ProductRepository $productRepository
      * @return Response
      */
-    public function showAll( ProductRepository $productRepository)
+    public function showAll(Request $request, ProductRepository $productRepository)
     {
-       $products = $productRepository->findAll();
-
-        return $this->render('product/show_all.html.twig', [
-            'products'=> $products,
-        ]);
-    }
-
-    /**
-     * @Route("product/{id}/choose", name="product_choose")
-     * @param ProductRepository $productRepository
-     * @return Response
-     */
-    public function productChoose( ProductRepository $productRepository)
-    {
-        
+        if($request->get('id')){
+            $product = $productRepository->find($request->get('id'));
+            $orderItem = new OrderItem();
+            $orderItem->setProduct($product);
+            $form = $this->createForm(ChooseProductTypeForm::class);
+            $form->handleRequest($request);
+            if($form->isSubmitted() && $form->isValid()){   
+                dd($form->getData());
+            }
+        }
         $products = $productRepository->findAll();
 
-        return $this->render('product/product_choose.html.twig', [
-            'products'=> $products,
+        return $this->render('product/show_all.html.twig', [
+            'products' => $products,
+            'form' => $form->createView(),
         ]);
     }
 }
