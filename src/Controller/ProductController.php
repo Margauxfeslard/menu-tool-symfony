@@ -41,9 +41,6 @@ class ProductController extends AbstractController
             $product = $productRepository->find($request->get('id'));
             $orderItem = new OrderItem();
             $orderItem->setProduct($product);
-            $orderItem->setQuantity(2);
-            $orderItem->setAmount(32);
-            $orderItem->setSize('Medium');
             $entityManager->persist($orderItem);
             $entityManager->flush();
         }
@@ -55,5 +52,21 @@ class ProductController extends AbstractController
             'products' => $products,
             'orderItems' => $orderItem
         ]);
+    }
+
+    /**
+     * @Route("/delete_order_item", name="orderItems_delete")
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param OrderItemRepository $orderItemRepository
+     * @return Response
+     */
+    public function deleteOrderItems(Request $request, EntityManagerInterface $em, OrderItemRepository $orderItemRepository)
+    {
+        $orderItem = $orderItemRepository->find($request->get('id'));
+        $em->remove($orderItem);
+        $em->flush();
+
+        return $this->redirectToRoute('products_show');
     }
 }

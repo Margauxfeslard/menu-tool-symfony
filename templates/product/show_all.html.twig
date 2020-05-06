@@ -48,10 +48,15 @@
                                         <option value="9">9</option>
                                     </select>
                                 </label>
+                                <a href="{{ path('orderItems_delete', {
+                                    id: od.id
+                                }) }}">
+                                    <span class="fa fa-trash"></span>
+                                </a>
                             </li>
                             {% endif %}
                         {% endfor %}
-                    <a href="#" class="btn btn-primary">Validate order</a>
+                    <a href="{{ path('app_order')}}" class="btn btn-primary">Validate order</a>
                 </div>
             </div>
     </div>
