@@ -25,14 +25,33 @@
                 </div>
                 <div class="col-md-6 right">
                     <h2>Order Item list</h2>
-                    {{ form_start(form) }}
-                    <ul>
-                        {% for od in form.orderItems %}
-                            <li>{{ form_row(od.size) }}</li>
-                            <li>{{ form_row(od.quantity) }}</li>
+                        {% for od in orderItems %}
+                            {% if od.product %}
+                            <li>{{ od.product.type }}
+                                <label for="">
+                                    <select name="size" id="">
+                                        <option value="small">Small</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="large">Large</option>
+                                    </select>
+                                </label>
+                                <label for="">
+                                    <select name="quantity" id="">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                    </select>
+                                </label>
+                            </li>
+                            {% endif %}
                         {% endfor %}
-                    </ul>
-                    {{ form_end(form) }}
+                    <a href="#" class="btn btn-primary">Validate order</a>
                 </div>
             </div>
     </div>

@@ -32,6 +32,11 @@ class OrderItem
      */
     private $product;
 
+    public function __toString()
+    {
+        return $this->product;
+    }
+
     /**
      * @ORM\OneToMany(targetEntity="Order", mappedBy="orderItem")
      */
@@ -83,6 +88,7 @@ class OrderItem
 
         return $this;
     }
+
 
     public function getOneOrder(): ?Order
     {
